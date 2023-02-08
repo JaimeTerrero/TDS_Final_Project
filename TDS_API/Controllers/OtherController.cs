@@ -26,17 +26,13 @@ namespace TDS_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOther([FromForm] OtherDTO request)
         {
-            string path = await UploadImage(request.FileUri);
-            request.ActualFileUrl = path;
-
             var newOther = new Other
             {
                 Name = request.Name,
                 Description = request.Description,
                 ContactNumber = request.ContactNumber,
                 MissingDate = request.MissingDate,
-                Reward = request.Reward,
-                ActualFileUrl = path
+                Reward = request.Reward
             };
 
             await _dbContext.Others.AddAsync(newOther);
@@ -55,15 +51,12 @@ namespace TDS_API.Controllers
                 return NotFound("Object was not found");
             }
 
-            var path = await UploadImage(request.FileUri);
-            request.ActualFileUrl = path;
 
             other.Name = request.Name;
             other.Description = request.Description;
             other.ContactNumber = request.ContactNumber;
             other.Reward = request.Reward;
             other.MissingDate = request.MissingDate;
-            other.ActualFileUrl = path;
 
             _dbContext.Others.Update(other);
             await _dbContext.SaveChangesAsync();
@@ -100,18 +93,18 @@ namespace TDS_API.Controllers
             return Ok("Object was deleted successfully");
         }
 
-        #region Upload Image Method
-        public async Task<string> UploadImage(IFormFile file)
-        {
-            var special = Guid.NewGuid().ToString();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-                @"Utility\PetImage", special + "-" + file.FileName);
-            using (var ms = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(ms);
-            }
-            return filePath;
-        }
-        #endregion
+        //#region Upload Image Method
+        //public async Task<string> UploadImage(IFormFile file)
+        //{
+        //    var special = Guid.NewGuid().ToString();
+        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+        //        @"Utility\PetImage", special + "-" + file.FileName);
+        //    using (var ms = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        await file.CopyToAsync(ms);
+        //    }
+        //    return filePath;
+        //}
+        //#endregion
     }
 }

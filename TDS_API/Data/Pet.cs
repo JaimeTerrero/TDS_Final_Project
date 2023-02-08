@@ -10,9 +10,5 @@ namespace TDS_API.Data
         public long Reward { get; set; }
         public long ContactNumber { get; set; }
         public string Description { get; set; }
-        [NotMapped]
-        public IFormFile FileUri { get; set; }
-
-        public string? ActualFileUrl { get; set; }
     }
 }

@@ -10,8 +10,5 @@ namespace TDS_API.DTOs
         public DateTime MissingDate { get; set; }
         public long Reward { get; set; }
         public string Description { get; set; }
-        [NotMapped]
-        public IFormFile FileUri { get; set; }
-        public string? ActualFileUrl { get; set; }
     }
 }

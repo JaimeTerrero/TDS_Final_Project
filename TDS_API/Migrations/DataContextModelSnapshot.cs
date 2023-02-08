@@ -30,9 +30,6 @@ namespace TDS_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ActualFileUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("ContactNumber")
                         .HasColumnType("bigint");
 
@@ -62,9 +59,6 @@ namespace TDS_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ActualFileUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ContactNumber")
                         .HasColumnType("bigint");
@@ -99,9 +93,6 @@ namespace TDS_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ActualFileUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ContactNumber")
                         .HasColumnType("bigint");

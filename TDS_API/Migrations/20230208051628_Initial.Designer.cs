@@ -12,8 +12,8 @@ using TDS_API;
 namespace TDS_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230206013624_UpdateImage")]
-    partial class UpdateImage
+    [Migration("20230208051628_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -61,9 +61,6 @@ namespace TDS_API.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ActualFileUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ContactNumber")
                         .HasColumnType("bigint");

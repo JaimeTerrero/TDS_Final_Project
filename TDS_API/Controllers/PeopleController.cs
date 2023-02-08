@@ -27,9 +27,6 @@ namespace TDS_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreatePeople([FromForm] PeopleDTO request)
         {
-            string path = await UploadImage(request.FileUri);
-            request.ActualFileUrl = path;
-
             var newPeople = new People
             {
                 Name = request.Name,
@@ -37,8 +34,7 @@ namespace TDS_API.Controllers
                 MissingDate = request.MissingDate,
                 Description = request.Description,
                 Reward = request.Reward,
-                ContactNumber = request.ContactNumber,
-                ActualFileUrl = request.ActualFileUrl
+                ContactNumber = request.ContactNumber
             };
 
             await _dbContext.Peoples.AddAsync(newPeople);
@@ -70,16 +66,12 @@ namespace TDS_API.Controllers
                 return NotFound("That people wasn´t found");
             }
 
-            var path = await UploadImage(request.FileUri);
-            request.ActualFileUrl = path;
-
             people.Name = request.Name;
             people.LastName = request.LastName;
             people.MissingDate = request.MissingDate;
             people.Description = request.Description;
             people.Reward = request.Reward;
             people.ContactNumber = request.ContactNumber;
-            people.ActualFileUrl = path;
 
             _dbContext.Peoples.Update(people);
             await _dbContext.SaveChangesAsync();
@@ -103,18 +95,18 @@ namespace TDS_API.Controllers
             return Ok("People was deleted successfully");
         }
 
-        #region Upload Image Method
-        public async Task<string> UploadImage(IFormFile file)
-        {
-            var special = Guid.NewGuid().ToString();
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-                @"Utility\PeopleImage", special + "-" + file.FileName);
-            using (var ms = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(ms);
-            }
-            return filePath;
-        }
-        #endregion
+        //#region Upload Image Method
+        //public async Task<string> UploadImage(IFormFile file)
+        //{
+        //    var special = Guid.NewGuid().ToString();
+        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+        //        @"Utility\PeopleImage", special + "-" + file.FileName);
+        //    using (var ms = new FileStream(filePath, FileMode.Create))
+        //    {
+        //        await file.CopyToAsync(ms);
+        //    }
+        //    return filePath;
+        //}
+        //#endregion
     }
 }
