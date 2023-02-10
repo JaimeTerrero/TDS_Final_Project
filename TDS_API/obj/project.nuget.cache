@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gePXQRfydlJ6IyG0nI9TS1cnJ2bsXkJIf082qz27AXgqSWwVZeWpcYc7Erb6JZ5SRVg+XLU0sxZnGYOTv5qylA==",
+  "dgSpecHash": "jqrhrtS88ZFFUBLJ6rTvL3hSa6Wit6lOiIWQts0lR6EPnWQhhtJ+ZAzWmAPxEgcCM1wd77aTRiiEjYpKeOGx3A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jaime Terrero\\source\\repos\\TDS_API\\TDS_API\\TDS_API.csproj",
+  "projectFilePath": "C:\\Users\\Jaime Terrero\\Documents\\GitHub\\TDS_Final_Project\\TDS_API\\TDS_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jaime Terrero\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Jaime Terrero\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
