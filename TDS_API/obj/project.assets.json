@@ -2231,11 +2231,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jaime Terrero\\source\\repos\\TDS_API\\TDS_API\\TDS_API.csproj",
+      "projectUniqueName": "C:\\Users\\Jaime Terrero\\Documents\\GitHub\\TDS_Final_Project\\TDS_API\\TDS_API.csproj",
       "projectName": "TDS_API",
-      "projectPath": "C:\\Users\\Jaime Terrero\\source\\repos\\TDS_API\\TDS_API\\TDS_API.csproj",
+      "projectPath": "C:\\Users\\Jaime Terrero\\Documents\\GitHub\\TDS_Final_Project\\TDS_API\\TDS_API.csproj",
       "packagesPath": "C:\\Users\\Jaime Terrero\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jaime Terrero\\source\\repos\\TDS_API\\TDS_API\\obj\\",
+      "outputPath": "C:\\Users\\Jaime Terrero\\Documents\\GitHub\\TDS_Final_Project\\TDS_API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Jaime Terrero\\AppData\\Roaming\\NuGet\\NuGet.Config",
