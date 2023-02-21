@@ -36,7 +36,8 @@ namespace TDS_API.Controllers
                 ContactNumber = request.ContactNumber,
                 MissingDate = request.MissingDate,
                 Reward = request.Reward,
-                ActualFileUrl = path
+                FileUri = request.FileUri,
+                ActualFileUrl = request.ActualFileUrl
             };
 
             await _dbContext.Others.AddAsync(newOther);
@@ -50,20 +51,22 @@ namespace TDS_API.Controllers
         {
             var other = await _dbContext.Others.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(other == null)
+            string path = await UploadImage(request.FileUri);
+            request.ActualFileUrl = path;
+
+            if (other == null)
             {
                 return NotFound("Object was not found");
             }
 
-            var path = await UploadImage(request.FileUri);
-            request.ActualFileUrl = path;
 
             other.Name = request.Name;
             other.Description = request.Description;
             other.ContactNumber = request.ContactNumber;
             other.Reward = request.Reward;
             other.MissingDate = request.MissingDate;
-            other.ActualFileUrl = path;
+            other.FileUri = request.FileUri;
+            other.ActualFileUrl = request.ActualFileUrl;
 
             _dbContext.Others.Update(other);
             await _dbContext.SaveChangesAsync();
@@ -101,11 +104,11 @@ namespace TDS_API.Controllers
         }
 
         #region Upload Image Method
-        public async Task<string> UploadImage(IFormFile file)
+        private async Task<string> UploadImage(IFormFile file)
         {
             var special = Guid.NewGuid().ToString();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-                @"Utility\PetImage", special + "-" + file.FileName);
+                @"Utility\OtherImage", special + "-" + file.FileName);
             using (var ms = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(ms);

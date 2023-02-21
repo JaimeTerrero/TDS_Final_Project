@@ -37,7 +37,8 @@ namespace TDS_API.Controllers
                 ContactNumber = request.ContactNumber,
                 MissingDate = request.MissingDate,
                 Reward = request.Reward,
-                ActualFileUrl = path,
+                FileUri = request.FileUri,
+                ActualFileUrl = request.ActualFileUrl
             };
 
             await _dbContext.Pets.AddAsync(newAnimal);
@@ -51,20 +52,22 @@ namespace TDS_API.Controllers
         {
             var animal = await _dbContext.Pets.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(animal == null)
+            string path = await UploadImage(request.FileUri);
+            request.ActualFileUrl = path;
+
+            if (animal == null)
             {
                 return NotFound("Animal wasn´t found");
             }
 
-            var path = await UploadImage(request.FileUri);
-            request.ActualFileUrl = path;
 
             animal.Name = request.Name;
             animal.Description = request.Description;
             animal.MissingDate = request.MissingDate;
             animal.Reward = request.Reward;
             animal.ContactNumber = request.ContactNumber;
-            animal.ActualFileUrl = path;
+            animal.FileUri = request.FileUri;
+            animal.ActualFileUrl = request.ActualFileUrl;
 
             _dbContext.Pets.Update(animal);
             await _dbContext.SaveChangesAsync();
@@ -102,7 +105,7 @@ namespace TDS_API.Controllers
         }
 
         #region Upload Image Method
-        public async Task<string> UploadImage(IFormFile file)
+        private async Task<string> UploadImage(IFormFile file)
         {
             var special = Guid.NewGuid().ToString();
             var filePath = Path.Combine(Directory.GetCurrentDirectory(),

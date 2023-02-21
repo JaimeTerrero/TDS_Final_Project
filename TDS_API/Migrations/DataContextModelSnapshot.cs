@@ -73,10 +73,6 @@ namespace TDS_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("MissingDate")
                         .HasColumnType("datetime2");
 

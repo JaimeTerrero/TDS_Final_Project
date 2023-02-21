@@ -12,8 +12,8 @@ using TDS_API;
 namespace TDS_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230206013624_UpdateImage")]
-    partial class UpdateImage
+    [Migration("20230220170309_NewFieldAdded")]
+    partial class NewFieldAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,10 +69,6 @@ namespace TDS_API.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

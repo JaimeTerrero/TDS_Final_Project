@@ -4,7 +4,7 @@
 
 namespace TDS_API.Migrations
 {
-    public partial class AddingAnimalAndOtherImages : Migration
+    public partial class NewFieldAddedToOtherAndPet : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
