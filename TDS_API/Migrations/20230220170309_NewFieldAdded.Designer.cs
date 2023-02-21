@@ -12,8 +12,8 @@ using TDS_API;
 namespace TDS_API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230208051628_Initial")]
-    partial class Initial
+    [Migration("20230220170309_NewFieldAdded")]
+    partial class NewFieldAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,14 +62,13 @@ namespace TDS_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ActualFileUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("ContactNumber")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

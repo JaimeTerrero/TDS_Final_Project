@@ -37,7 +37,8 @@ namespace TDS_API.Migrations
                     ContactNumber = table.Column<long>(type: "bigint", nullable: false),
                     MissingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Reward = table.Column<long>(type: "bigint", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActualFileUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

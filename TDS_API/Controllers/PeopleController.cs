@@ -27,20 +27,26 @@ namespace TDS_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreatePeople([FromForm] PeopleDTO request)
         {
+            //var peopleExist = await _dbContext.Peoples.FirstOrDefaultAsync(x => x.Name == request.Name)
+
+            string path = await UploadImage(request.FileUri);
+            request.ActualFileUrl = path;
+
             var newPeople = new People
             {
                 Name = request.Name,
-                LastName = request.LastName,
                 MissingDate = request.MissingDate,
                 Description = request.Description,
                 Reward = request.Reward,
-                ContactNumber = request.ContactNumber
+                ContactNumber = request.ContactNumber,
+                FileUri = request.FileUri,
+                ActualFileUrl = request.ActualFileUrl
             };
 
             await _dbContext.Peoples.AddAsync(newPeople);
             await _dbContext.SaveChangesAsync();
 
-            return Ok(newPeople);
+            return Ok(request);
         }
 
         [HttpGet("{id:int}")]
@@ -61,17 +67,21 @@ namespace TDS_API.Controllers
         {
             var people = await _dbContext.Peoples.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(people == null)
+            string path = await UploadImage(request.FileUri);
+            request.ActualFileUrl = path;
+
+            if (people == null)
             {
                 return NotFound("That people wasn´t found");
             }
 
             people.Name = request.Name;
-            people.LastName = request.LastName;
             people.MissingDate = request.MissingDate;
             people.Description = request.Description;
             people.Reward = request.Reward;
             people.ContactNumber = request.ContactNumber;
+            people.FileUri = request.FileUri;
+            people.ActualFileUrl = request.ActualFileUrl;
 
             _dbContext.Peoples.Update(people);
             await _dbContext.SaveChangesAsync();
@@ -95,18 +105,18 @@ namespace TDS_API.Controllers
             return Ok("People was deleted successfully");
         }
 
-        //#region Upload Image Method
-        //public async Task<string> UploadImage(IFormFile file)
-        //{
-        //    var special = Guid.NewGuid().ToString();
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        //        @"Utility\PeopleImage", special + "-" + file.FileName);
-        //    using (var ms = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(ms);
-        //    }
-        //    return filePath;
-        //}
-        //#endregion
+        #region Upload Image Method
+        private async Task<string> UploadImage(IFormFile file)
+        {
+            var special = Guid.NewGuid().ToString();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                @"Utility\PeopleImage", special + "-" + file.FileName);
+            using (var ms = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(ms);
+            }
+            return filePath;
+        }
+        #endregion
     }
 }

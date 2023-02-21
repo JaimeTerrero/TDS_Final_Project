@@ -26,13 +26,18 @@ namespace TDS_API.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOther([FromForm] OtherDTO request)
         {
+            string path = await UploadImage(request.FileUri);
+            request.ActualFileUrl = path;
+
             var newOther = new Other
             {
                 Name = request.Name,
                 Description = request.Description,
                 ContactNumber = request.ContactNumber,
                 MissingDate = request.MissingDate,
-                Reward = request.Reward
+                Reward = request.Reward,
+                FileUri = request.FileUri,
+                ActualFileUrl = request.ActualFileUrl
             };
 
             await _dbContext.Others.AddAsync(newOther);
@@ -46,7 +51,10 @@ namespace TDS_API.Controllers
         {
             var other = await _dbContext.Others.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(other == null)
+            string path = await UploadImage(request.FileUri);
+            request.ActualFileUrl = path;
+
+            if (other == null)
             {
                 return NotFound("Object was not found");
             }
@@ -57,6 +65,8 @@ namespace TDS_API.Controllers
             other.ContactNumber = request.ContactNumber;
             other.Reward = request.Reward;
             other.MissingDate = request.MissingDate;
+            other.FileUri = request.FileUri;
+            other.ActualFileUrl = request.ActualFileUrl;
 
             _dbContext.Others.Update(other);
             await _dbContext.SaveChangesAsync();
@@ -93,18 +103,18 @@ namespace TDS_API.Controllers
             return Ok("Object was deleted successfully");
         }
 
-        //#region Upload Image Method
-        //public async Task<string> UploadImage(IFormFile file)
-        //{
-        //    var special = Guid.NewGuid().ToString();
-        //    var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-        //        @"Utility\PetImage", special + "-" + file.FileName);
-        //    using (var ms = new FileStream(filePath, FileMode.Create))
-        //    {
-        //        await file.CopyToAsync(ms);
-        //    }
-        //    return filePath;
-        //}
-        //#endregion
+        #region Upload Image Method
+        private async Task<string> UploadImage(IFormFile file)
+        {
+            var special = Guid.NewGuid().ToString();
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
+                @"Utility\OtherImage", special + "-" + file.FileName);
+            using (var ms = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(ms);
+            }
+            return filePath;
+        }
+        #endregion
     }
 }
